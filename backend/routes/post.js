@@ -24,7 +24,7 @@ router.post("/", authentification, multer, postController.createPost);
 router.put("/:id", authentification, multer, postController.modifyPost)
 
 // Route pour supprimer un post créé : DELETE /api/post/:id
-router.delete("/:id", authentification, sauceController.deleteSauce)
+router.delete("/:id", authentification, postController.deletePost)
 
 
 

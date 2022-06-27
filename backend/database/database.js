@@ -6,7 +6,8 @@ const database = mysql.createConnection({
     user     : 'root',
     password : 'Ludo',
     database : "groupomania"
-  });
+  },
+  console.log("Connecté à la BDD SQL"));
   
 exports.getDatabase = () => {
      return database;
