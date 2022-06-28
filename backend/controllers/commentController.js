@@ -22,6 +22,14 @@ exports.createComment = async (req, res)=>{
     };
 };
 
+exports.modifyComment = async (req, res)=>{
+    try {
+
+    } catch (error) {
+        res.status(400).json("Erreur modification comment " + error);
+    };
+};
+
 exports.deleteComment = async (req, res)=>{
     try {
 

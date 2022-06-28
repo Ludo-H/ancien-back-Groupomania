@@ -33,7 +33,7 @@ router.post("/login", userController.login);
 router.put("/:id", authentification, userController.updateUser);
 
 // La route désactiver compte
-router.get("/desactivate/:id", authentification, userController.desactivateAccount);
+router.delete("/delete/:id", authentification, userController.deleteAccount);
 
 // La route se déconnecter
 router.get("/logout", userController.logout)

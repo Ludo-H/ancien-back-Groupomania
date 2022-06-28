@@ -53,7 +53,7 @@ exports.login = (req, res) => {
         database.query(sql, emailCryptoJS, async (error, result)=>{
             // Si l'index 0 de result est faux
             if(!result[0]){
-                res.status(400).json('Email incorrect');
+                res.status(400).json('Email incorrect'); 
             // Sinon
             }else {
                 // On compare le MDP entré et celui dans la BDD correspondant
@@ -98,11 +98,16 @@ exports.updateUser = async (req, res) => {
 
 
 //********************************************************************/
-exports.desactivateAccount = async (req, res) => {
+exports.deleteAccount = async (req, res) => {
     try {
-
+        const sql = "DELETE FROM users WHERE user_id = ?";
+        const userId = req.params.id;
+        database.query(sql, userId, (error, result)=>{
+            if(!result) throw error;
+            res.status(200).json("Compte supprimé");
+        });
     } catch (error) {
-        res.status(400).json("Erreur désactivation compte " + error);
+        res.status(400).json("Erreur suppression compte " + error);
     };
 };
 //********************************************************************/
@@ -111,7 +116,9 @@ exports.desactivateAccount = async (req, res) => {
 //********************************************************************/
 exports.logout = async (req, res) => {
     try {
-
+        // Sans le token la connexion n'est plus possible
+        res.clearCookie("jwt");
+        res.status(200).json("Utilisateur déconnecté");
     } catch (error) {
         res.status(400).json("Erreur déconnexion compte " + error);
     };
@@ -122,6 +129,20 @@ exports.logout = async (req, res) => {
 //********************************************************************/
 exports.getOneUser = async (req, res) => {
     try {
+        // On isole la requete
+        const sql = "SELECT * FROM users WHERE user_id = ?";
+        // On stocke l'id voulu de la requete
+        const userId = req.params.id;
+        database.query(sql, userId, (error, result)=>{
+            if(error) throw error;
+            // On sélectionne les infos de l'user que l'on souhaite retourner
+            const userInfos = {
+                firstname: result[0].user_firstname,
+                lastname: result[0].user_lastname,
+                photo: result[0].user_profileurl
+            };
+            res.status(200).json(userInfos);
+        });
 
     } catch (error) {
         res.status(400).json("Erreur affichage utilisateur " + error);

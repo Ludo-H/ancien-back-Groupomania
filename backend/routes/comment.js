@@ -6,7 +6,7 @@ const commentController = require("../controllers/commentController")
 const authentification = require('../middleware/authentification');
 
 // Importation de multer pour gérer les images
-// const multer = require("../middleware/multer");
+const multer = require("../middleware/multer");
 
 // On utilise router de express
 const router = express.Router();
@@ -22,7 +22,7 @@ router.get("/:id", authentification, commentController.getOneComment)
 router.post("/", authentification, commentController.createComment);
 
 // Route pour modifier le comment créé : PUT /api/comment/:id
-// router.put("/:id", authentification, multer, commentController.modifyComment)
+router.put("/:id", authentification, multer, commentController.modifyComment)
 
 // Route pour supprimer un comment créé : DELETE /api/comment/:id
 router.delete("/:id", authentification, commentController.deleteComment);

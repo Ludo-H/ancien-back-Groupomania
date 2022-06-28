@@ -1,0 +1,11 @@
+Controller comment :
+    - Toutes les fonctions à créer
+
+Controller like :
+    - Toutes les fonctions à créer
+
+Controller post :
+    - Toutes les fonctions à créer
+    
+Controller user : 
+    - Reste que la fonction updateUser
