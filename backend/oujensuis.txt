@@ -1,11 +1,20 @@
 Controller comment :
-    - Toutes les fonctions à créer
+    - GetAll :
+    - GetOne :
+    - Create : 
+    - Update :
+    - Delete :
 
 Controller like :
-    - Toutes les fonctions à créer
+    - LikePost :
+    - PostLiked :
 
 Controller post :
-    - Toutes les fonctions à créer
-    
+    - GetAll :
+    - GetOne :
+    - Create : OK
+    - Update :
+    - Delete :
+
 Controller user : 
     - Reste que la fonction updateUser

@@ -35,7 +35,6 @@ exports.signup = async (req, res) => {
             if(error) throw error;
             res.status(200).json("Utilisateur créé !");
         });
-        
     } catch (error) {
         res.status(400).json("Erreur création compte " + error);
     };
@@ -143,7 +142,6 @@ exports.getOneUser = async (req, res) => {
             };
             res.status(200).json(userInfos);
         });
-
     } catch (error) {
         res.status(400).json("Erreur affichage utilisateur " + error);
     };
