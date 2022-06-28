@@ -4,7 +4,6 @@ const mysql = require("mysql")
 const database = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : 'Ludo',
     database : "groupomania"
   },
   console.log("Connecté à la BDD SQL"));
