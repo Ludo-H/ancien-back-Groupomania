@@ -6,15 +6,20 @@ Controller comment :
     - Delete :
 
 Controller like :
-    - LikePost :
+    - LikePost  :
     - PostLiked :
 
 Controller post :
-    - GetAll :
-    - GetOne :
+    - GetAll : OK
+    - GetOne : OK
     - Create : OK
     - Update :
-    - Delete :
+    - Delete : OK
 
 Controller user : 
-    - Reste que la fonction updateUser
+    - SignUp        : OK
+    - Login         : OK
+    - Logout        : OK
+    - Update        :
+    - Delete        : OK
+    - GetOneUser    : OK
