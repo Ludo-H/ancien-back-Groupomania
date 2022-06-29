@@ -1,9 +1,9 @@
 Controller comment :
-    - GetAll :
-    - GetOne :
-    - Create : 
+    - GetAll : OK
+    - GetOne : OK
+    - Create : OK
     - Update :
-    - Delete :
+    - Delete : OK
 
 Controller like :
     - LikePost  :
