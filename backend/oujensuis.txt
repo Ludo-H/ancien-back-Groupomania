@@ -2,24 +2,28 @@ Controller comment :
     - GetAll : OK
     - GetOne : OK
     - Create : OK
-    - Update :
+    - Update : OK
     - Delete : OK
 
 Controller like :
-    - LikePost  :
-    - PostLiked :
+    - LikePost  : OK
+    - PostLiked : OK
 
 Controller post :
     - GetAll : OK
     - GetOne : OK
     - Create : OK
-    - Update :
+    - Update : OK
     - Delete : OK
 
 Controller user : 
     - SignUp        : OK
     - Login         : OK
     - Logout        : OK
-    - Update        :
+    - Update        : OK
     - Delete        : OK
     - GetOneUser    : OK
+
+verifier les routes si correctes
+verifier update users, update post
+verifier droit d'actions (userid dans token)

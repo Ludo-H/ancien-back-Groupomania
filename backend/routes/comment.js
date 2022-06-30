@@ -16,13 +16,13 @@ const router = express.Router();
 router.get("/", authentification, commentController.getAllComment);
 
 // Route pour afficher le comment cliqué : GET /api/comment/:id
-router.get("/:id", authentification, commentController.getOneComment)
+router.get("/:id", authentification, commentController.getOneComment);
 
 // Route pour créer un comment dans la BDD : POST /api/comment 
 router.post("/", authentification, commentController.createComment);
 
 // Route pour modifier le comment créé : PUT /api/comment/:id
-router.put("/:id", authentification, multer, commentController.modifyComment)
+router.put("/:id", authentification, multer, commentController.modifyComment);
 
 // Route pour supprimer un comment créé : DELETE /api/comment/:id
 router.delete("/:id", authentification, commentController.deleteComment);

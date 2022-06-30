@@ -1,6 +1,8 @@
 // Importer Express pour utiliser la fonction router
 const express = require("express");
 
+// Importation de multer pour gérer les images
+const multer = require("../middleware/multer");
 
 // On importe le middleware d'authentification
 const authentification = require('../middleware/authentification');
@@ -30,7 +32,7 @@ router.post("/signup", emailValidator, password, userController.signup);
 router.post("/login", userController.login);
 
 // La route update
-router.put("/:id", authentification, userController.updateUser);
+router.put("/:id", authentification, multer, userController.updateUser);
 
 // La route désactiver compte
 router.delete("/delete/:id", authentification, userController.deleteAccount);

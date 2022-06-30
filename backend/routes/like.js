@@ -8,8 +8,8 @@ const authentification = require('../middleware/authentification');
 const router = express.Router();
 
 // Les routes
-router.post("/", authentification, likeController.likePost);
-router.post("/liked", authentification, likeController.postLiked);
+router.patch("/", authentification, likeController.likePost);
+router.get("/:id", authentification, likeController.totalLikes);
 
 
 module.exports = router;
