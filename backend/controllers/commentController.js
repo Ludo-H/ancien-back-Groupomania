@@ -69,14 +69,14 @@ exports.modifyComment = async (req, res) => {
 
             if (userOfComment == req.auth.userId || req.auth.admin == 1) {
                 // On créé le contenu qui va changer
-                const updateComment = {
-                    comment_id: req.params.id,
+                const updateComment = { 
+                    // comment_id: req.params.id,
                     comment_text: req.body.text,
                     user_id: req.auth.userId,
                     comment_createdat: new Date() // Important car la date resterait l'ancienne
                 };
                 // Requete isolée et lancée
-                const sql = "UPDATE comments SET ?";
+                const sql = `UPDATE comments SET ? WHERE comment_id = ${req.params.id}`;
                 database.query(sql, updateComment, (error, result) => {
                     if (error) res.status(400).json(error);
                     res.status(200).json("Commentaire mis à jour !");
@@ -113,7 +113,7 @@ exports.deleteComment = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(400).json("Erreur suppression comment " + error);
+        res.status(400).json("Erreur suppression comment " + error);   
     };
 };
 //********************************************************************/

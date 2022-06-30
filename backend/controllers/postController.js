@@ -195,6 +195,18 @@ exports.modifyPost = async (req, res) => {
 
                 // Modification si il n'y a pas d'image dans le nouveau post
                 if (!req.file) {
+                    // const sqlPost = `SELECT * FROM posts WHERE post_id = ${req.params.id}`;
+                    // database.query(sql, (error, result)=>{
+                    //     if (error) res.status(400).json("Erreur affichage post " + error);
+                    //     if(result[0].photo_id > 0){
+
+                    //     }else{
+                            
+                    //     }
+                    // });
+                    // Inutile de modifier un post avec image pour lui apporter des modifications sans image, et en voulant supprimer l'image.
+                    // Autant supprimer le post et en recréer un autre
+
                     // Contenu du nouveau post, le post id ne doit pas apparaitre dans le contenu
                     const updatePost = {
                         post_text: req.body.text,
@@ -209,7 +221,7 @@ exports.modifyPost = async (req, res) => {
                     });
                 };
             } else {
-                res.status(400).json("Action non autorisée");
+                res.status(400).json("Action non autorisée");  
             }
         })
 
