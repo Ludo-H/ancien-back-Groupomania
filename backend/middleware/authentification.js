@@ -20,7 +20,8 @@ const userId = decodedToken.userId;
 
 const admin = decodedToken.admin;
 
-// On créé des données qui vont être utilisées lors des requetes, pour les permettre ou non
+// On créé des données qui vont être utilisées lors des requetes dans les controllers, pour les permettre ou non
+// En accédant aux infos userId et statut de l'user
 req.auth = {userId, admin};
 
 

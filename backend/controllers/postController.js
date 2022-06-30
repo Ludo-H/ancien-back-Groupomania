@@ -47,7 +47,7 @@ exports.createPost = async (req, res) => {
             // On créé le contenu à envoyer
             const newImage = {
                 photo_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-                user_id: Number(req.body.userId)
+                user_id: req.auth.userId
             };
             // Requete a part
             // On envoie d'abord la photo dans la BDD, puis le post
@@ -61,7 +61,7 @@ exports.createPost = async (req, res) => {
                 const newPost = {
                     post_text: req.body.text,
                     photo_id: photoId,
-                    user_id: req.body.userId
+                    user_id: req.auth.userId
                 };
                 // Envoie du post dans la BDD
                 const sql = "INSERT INTO posts SET ?";
@@ -77,7 +77,7 @@ exports.createPost = async (req, res) => {
             // Création du contenu à envoyer
             const newPost = {
                 post_text: req.body.text,
-                user_id: req.body.userId
+                user_id: req.auth.userId
             };
             // Envoie dans la BDD
             const sql = "INSERT INTO posts SET ?";
@@ -135,7 +135,7 @@ exports.modifyPost = async (req, res) => {
                                 // On créé le contenu pour insérer la nouvelle image
                                 const newImage = {
                                     photo_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-                                    user_id: Number(req.body.userId)
+                                    user_id: req.auth.userId
                                 };
 
                                 // Requete pour remplacer l'ancienne image par la nouvelle dans la BDD, sans recréer d'id
@@ -147,7 +147,7 @@ exports.modifyPost = async (req, res) => {
                                     const updatePost = {
                                         post_text: req.body.text,
                                         photo_id: photoId, // Variable IMPORTANTE plus haut, sans ça le contenu n'est pas retrouvable
-                                        user_id: req.body.userId,
+                                        user_id: req.auth.userId,
                                         post_createdat: new Date()
                                     };
                                     // On update le post dans la BDD
@@ -165,7 +165,7 @@ exports.modifyPost = async (req, res) => {
                             // On créé le contenu à envoyer
                             const newImage = {
                                 photo_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-                                user_id: Number(req.body.userId)
+                                user_id: req.auth.userId
                             };
                             // On envoie d'abord la photo dans la BDD, puis le post
                             const sqlImage = `INSERT INTO photos SET ?`;
@@ -178,7 +178,7 @@ exports.modifyPost = async (req, res) => {
                                 const updatePost = {
                                     post_text: req.body.text,
                                     photo_id: photoId,
-                                    user_id: req.body.userId,
+                                    user_id: req.auth.userId,
                                     post_createdat: new Date()
                                 };
                                 // Envoie du post dans la BDD
@@ -198,7 +198,7 @@ exports.modifyPost = async (req, res) => {
                     // Contenu du nouveau post, le post id ne doit pas apparaitre dans le contenu
                     const updatePost = {
                         post_text: req.body.text,
-                        user_id: req.body.userId,
+                        user_id: req.auth.userId,
                         post_createdat: new Date() // Important car la date resterait l'ancienne
                     };
                     // La requete en selectionnant le post_id
@@ -224,43 +224,43 @@ exports.modifyPost = async (req, res) => {
 exports.deletePost = async (req, res) => {
     try {
         const sqlAdmin = `SELECT * FROM posts WHERE post_id = ${req.params.id}`;
-        database.query(sqlAdmin, (error, result)=>{
+        database.query(sqlAdmin, (error, result) => {
             if (error) res.status(400).json("Erreur affichage post à supprimer " + error);
             const userOfPost = result[0].user_id;
 
-            if(userOfPost == req.auth.userId || req.auth.admin == 1){
+            if (userOfPost == req.auth.userId || req.auth.admin == 1) {
                 if (result[0].photo_id != null) {
                     // Cette variable IMPORTANTE va nous servir plus bas pour crééer le nouveau contenu
                     const photoId = result[0].photo_id
-    
+
                     // On affiche la photo grace à l'id récupéré dans le post plus haut
                     const sql = `SELECT * FROM photos WHERE photo_id = ${photoId}`;
                     database.query(sql, (error, result) => {
                         if (error) res.status(400).json("Erreur affichage de la photo dans la table " + error);
-    
+
                         // On recréé le nom de l'image sans le chemin avant
                         const imageToDelete = result[0].photo_url.split('/images')[1];
-    
+
                         // On supprime l'image du dossier node
                         fs.unlink(`images/${imageToDelete}`, () => {
                             if (error) console.log("Erreur de suppression image dans le dossier " + error);
                             console.log('Image supprimée du dossier');
                         });
-    
+
                         const sqlImage = 'DELETE FROM photos WHERE photo_id = ?';
                         database.query(sqlImage, photoId, (error, result) => {
                             if (error) res.status(400).json("Erreur supression image, supression post " + error);
                             console.log("Image supprimé BDD");
                         });
-    
-    
+
+
                         const sql = "DELETE FROM posts WHERE post_id = ?";
                         const postId = req.params.id;
                         database.query(sql, postId, (error, result) => {
                             if (!result) throw error;
                             res.status(200).json("Post supprimé");
                         });
-    
+
                     })
                 } else {
                     const sql = "DELETE FROM posts WHERE post_id = ?";
@@ -270,7 +270,7 @@ exports.deletePost = async (req, res) => {
                         res.status(200).json("Post supprimé");
                     });
                 }
-            }else{
+            } else {
                 res.status(400).json("Action non autorisée");
             }
         })

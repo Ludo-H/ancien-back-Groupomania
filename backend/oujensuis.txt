@@ -24,6 +24,10 @@ Controller user :
     - Delete        : OK
     - GetOneUser    : OK
 
-verifier les routes si correctes
+verifier les routes si correctes, like get? patch? put? post?
 verifier update users, update post
 verifier droit d'actions (userid dans token)
+usercontroller : Get all user utile ?
+
+verifier création post, remplacé number req.body.id par req.auth.userId
+fonctions like suffisante ? autre fonction a rajouter ?

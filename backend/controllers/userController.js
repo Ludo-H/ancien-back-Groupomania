@@ -63,8 +63,9 @@ exports.login = (req, res) => {
                     // Sinon
                 } else {
                     // On créé la const token pour pouvoir l'utiliser
+                    // On retrouve l'userId et le role admin de l'user dans le token, dans le middleware on s'en sert, et va permettre les droits plus tard
                     const token = jwt.sign(
-                        { userId: result[0].user_id, admin: result[0].user_isadmin},
+                        { userId: result[0].user_id, admin: result[0].user_isadmin },
                         process.env.JWT_KEY,
                         { expiresIn: "24h" }
                     );
@@ -222,13 +223,12 @@ exports.updateUser = async (req, res) => {
 //********************************************************************/
 exports.deleteAccount = async (req, res) => {
     try {
-         // On va vérifier si l'utilisateur est l'admin ou si il agit bien sur son compte
+        // On va vérifier si l'utilisateur est l'admin ou si il agit bien sur son compte
         const sqlAdmin = `SELECT * FROM users WHERE user_id = ${req.auth.userId}`;
         database.query(sqlAdmin, (error, result) => {
             if (error) res.status(400).json("Erreur affichage delete user " + error);
             // Pour pouvoir modifier, soit admin soit bon user
             if (req.auth.userId == req.params.id || req.auth.admin == 1) {
-                console.log("Auth vérifiée");
                 const sql = "DELETE FROM users WHERE user_id = ?";
                 const userId = req.params.id;
                 database.query(sql, userId, (error, result) => {
